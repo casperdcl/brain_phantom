@@ -1,0 +1,30 @@
+CFLAGS= -O6 -I/usr/recon/lib -I/usr/image/lib -L/usr/recon/lib -L/usr/image/lib 
+LIBS= -lim -lm
+
+
+dncat_im 	: dncat_main.o no_license.o dncat_output_im.o 
+		cc $(CFLAGS) -o dncat_im dncat_main.o no_license.o \
+			dncat_output_im.o $(LIBS)
+
+hrt_lesn_im 	: hrt_lesn_main.o no_license.o dncat_output_im.o 
+		cc $(CFLAGS) -o hrt_lesn_im hrt_lesn_main.o no_license.o \
+			dncat_output_im.o $(LIBS)
+
+resp_vectors 	: resp_vectors.o no_license.o 
+		cc $(CFLAGS) -o resp_vectors resp_vectors.o no_license.o \
+			$(LIBS)
+
+hrt_vectors 	: hrt_vectors.o no_license.o 
+		cc $(CFLAGS) -o hrt_vectors hrt_vectors.o no_license.o \
+			$(LIBS)
+
+dplaq_im 	: dplaq_main.o no_license.o dncat_output_im.o 
+		cc $(CFLAGS) -o dplaq_im dplaq_main.o no_license.o \
+			dncat_output_im.o $(LIBS)
+
+lesn_im 	: lesn_main.o no_license.o dncat_output_im.o 
+		cc $(CFLAGS) -o lesn_im lesn_main.o no_license.o \
+			dncat_output_im.o $(LIBS)
+
+clean:
+	rm -f *.o dncat_im hrt_lesn_im lesn_im dplaq_im resp_vectors hrt_vectors
