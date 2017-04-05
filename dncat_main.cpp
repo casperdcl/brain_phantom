@@ -8,6 +8,7 @@
 #include "global_vars.h"      /* global variables for ncat */
 #include "constants.h"        /* global constants */
 #include "dncatsubs.h"
+#include "dncat_output_bin.h"
 
 char  gen_parfile[64];
 char  outputbase[64];
@@ -19,7 +20,7 @@ TRI_MODEL slice_tmodel;
 /* BEGIN MAIN PROGRAM  */
 /***********************/
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   FILE *fp, *fp2;
   int i, j, k, l, kf;

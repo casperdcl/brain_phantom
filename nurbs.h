@@ -201,3 +201,6 @@ void free_pvector(POINT *v, long nl, long nh);
 int *ivector(long nl, long nh);
 void MakeCurve(CURVE *C, INDEX n, INDEX m, DEGREE p);
 POINT *p_vector(long nl, long nh);
+TRIANGLE *tri_vector(long nl,long nh);
+TRIANGLE *tri_vector(long nl,long nh);
+float *vector(long nl,long nh);
