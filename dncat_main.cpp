@@ -1,17 +1,13 @@
 /* Program to produce voxelized phantoms from NURBS torso file input*/
 /* Paul Segars   3/9/2006 */
 
-#include <stdio.h>          
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
+#include "global_includes.h"
+#include <string>
 
 #include "nurbs.h"            /* header file for nurbs */
 #include "global_vars.h"      /* global variables for ncat */
 #include "constants.h"        /* global constants */
-#include "nurbs.c"            /* NURBS routines */
-#include "dncatsubs.c"
-#include "dncat_output_bin.c"
+#include "dncatsubs.h"
 
 char  gen_parfile[64];
 char  outputbase[64];

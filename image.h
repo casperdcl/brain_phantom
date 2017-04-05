@@ -12,9 +12,7 @@
 /*                                                                           */
 /*---------------------------------------------------------------------------*/
 
-#ifndef _IMAGE_HEADER_
-#define _IMAGE_HEADER_
-
+#pragma once
 
 #ifdef SYSV
 #include <sys/types.h>
@@ -30,10 +28,18 @@
 #include <sys/file.h>
 #endif /*!__FILE_HEADER__*/
 #else
-#include <sys/file.h>
+  #ifdef WIN32
+    //
+  #else
+    #include <sys/file.h>
+  #endif
 #endif
 
-#include <unistd.h>
+#ifdef WIN32
+  //
+#else
+  #include <unistd.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -150,15 +156,15 @@ typedef struct {
 char _imerrbuf[nERROR];
 
 /* Initialization routines */
-IMAGE *imcreat();
+IMAGE *imcreat(char *new_name, int mode, int type, int dimc, int dimv[3]);
 IMAGE *imopen();
 IMAGE *dcmopen();
 IMAGE *ifopen();
-int imclose();
+int imclose(IMAGE *);
 
 /* Pixel access routines */
 int imread();
-int imwrite();
+int imwrite(IMAGE *out_image, int start, int end, float *dat);
 int imgetpix();
 int imputpix();
 
@@ -263,8 +269,6 @@ int pdim_map();
 #define r5cftk_	R5CFTK
 #define r8cftk_	R8CFTK
 #define rpcftk_	RPCFTK
-#endif
-
 #endif
 
 /******************************************************************************\

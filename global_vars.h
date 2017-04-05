@@ -2,6 +2,8 @@
 **       GLOBAL VARIABLES
 **---------------------------------------------*/
 
+#pragma once
+
 #define q_degree 3
 #define p_degree 3
 float PI;
