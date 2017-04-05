@@ -1,3 +1,5 @@
+#pragma once
+
 #define SUP_FRONT_GYRUS_RIGHT 			10
 #define SUP_FRONT_GYRUS_LEFT			70
 #define MID_FRONT_GYRUS_RIGHT			2

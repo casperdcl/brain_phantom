@@ -21,18 +21,14 @@
   --------------------------------------------------------------
 */
 /* STANDARD C LIBRARIES */
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
+#include "global_includes.h"
+#include <string>
 
 typedef float FLOATTYPE;
 
 /* Not currently used, but here if you need them: */
 /* typedef unsigned char BYTETYPE;   /* value range: 0 to 255 */
 /* typedef short INTTYPE;            /* value range: -32768 to 32767 */
-
-#define Abort(Mesg){fprintf(stderr, "%s\n", Mesg); exit(1);}
 
 /*-------------------------------------------------------------*/
 void SAVE_TO_FILE(float *array, int xdim, int ydim, int zdim, char *name)

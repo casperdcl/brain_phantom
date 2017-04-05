@@ -1,3 +1,5 @@
+#pragma once
+
 typedef long INDEX;
 typedef short FLAG;
 typedef int INTEGER;
@@ -191,3 +193,11 @@ typedef struct stat_s {
                                 /* file  */
 } statistics_t;
 
+void Calc_UniformKnotVector(INDEX n, DEGREE p, KNOTVECTOR knot_v, float *uk);
+CPOINT **cp_matrix(long nrl, long nrh, long ncl, long nch);
+POINT CurvePoint(INDEX n, DEGREE p, KNOTVECTOR knot_v, CPOINT *Pw, float u);
+void free_ivector(int *v, long nl, long nh);
+void free_pvector(POINT *v, long nl, long nh);
+int *ivector(long nl, long nh);
+void MakeCurve(CURVE *C, INDEX n, INDEX m, DEGREE p);
+POINT *p_vector(long nl, long nh);

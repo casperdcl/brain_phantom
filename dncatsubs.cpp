@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#define Abort(Mesg){fprintf(stderr, "%s\n", Mesg); exit(1);} 
+#include "dncatsubs.h"
+#include "global_includes.h"
+#include "nurbs.h"
+#include "global_vars.h"
+#include "constants.h"
 
 /*--------------------------------------------------------------*/   
 /*--------------------------------------------------------------*/   
