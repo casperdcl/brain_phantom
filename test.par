@@ -1,0 +1,124 @@
+1	: activity_phantom_each_frame (1=save phantom to file, 0=don't save)
+0	: activity_phantom_average    (1=save , 0=don't save) see NOTE 0
+
+0       : motion_option  (0 = no motion, 1 = motion)
+
+1	: output_period (SECS) 
+1	: output_frames (# of output time frames )
+
+1	: motion_period (SECS) (length of motion cycle)
+0.0	: motion_start_phase_index (range=0.0 to 1.0)
+0	: motion_flag (0 = use default curve with amplitudes below, 1 = use user defined curve ignoring following 6 parameters below)
+0.0	: x_translation  (extent in mm's)
+0.0	: y_translation  (extent in mm's)
+0.0	: z_translation  (extent in mm's)
+0.0	: x_rotation  (extent in degrees)
+0.0	: y_rotation  (extent in degrees)
+0.0	: z_rotation  (extent in degrees)
+sample_motion.txt	: filename for user defined motion curve
+
+0.16    : pixel width (cm);   
+0.20	: slice width (cm);   
+128	: array size   
+1	: start_slice; 
+128	: end_slice;  
+2	: subvoxel_index (=1,2,3,4 -> 1,8,27,64 subvoxels/voxel, respectively)
+
+5121 Grey "superior frontal gyrus" right
+5111 "superior frontal gyrus" left
+5125 "middle frontal gyrus" right
+5115 "middle frontal gyrus" left
+5126 "inferior frontal gyrus" right
+5116 "inferior frontal gyrus" left
+7520 "precentral gyrus" right
+7510 "precentral gyrus" left
+5190 "lateral front-orbital gyrus" right 
+5180 "lateral front-orbital gyrus" left
+7325 "medial front-orbital gyrus" right
+7315 "medial front-orbital gyrus" left
+5720 "cingulate region" right
+5710 "cingulate region" left
+5000 "medial frontal gyrus" right  
+5000 "medial frontal gyrus" left   
+5321 "superior parietal lobule" right
+5311 "superior parietal lobule" left
+9420 "supramarginal gyrus" right
+9410 "supramarginal gyrus" left
+5000 "angular gyrus" right  
+5000 "angular gyrus" left
+7920 "precuneus" right
+7910 "precuneus" left
+7420 "postcentral gyrus" right
+7410 "postcentral gyrus" left
+5221 "superior temporal gyrus" right 
+5211 "superior temporal gyrus" left  
+5225 "middle temporal gyrus" right
+5215 "middle temporal gyrus" left
+5226 "inferior temporal gyrus" right
+5216 "inferior temporal gyrus" left
+5000 "uncus" right
+5000 "uncus" left
+5000 "medial occipitotemporal gyrus" right
+5000 "medial occipitotemporal gyrus" left
+5000 "lateral occipitotemporal gyrus" right
+5000 "lateral occipitotemporal gyrus" left
+100 "amygdala" right
+110 "amygdala" left
+6320 "parahippocampal gyrus" right
+6310 "parahippocampal gyrus" left
+5000 "occipital pole" right
+5000 "occipital pole" left
+5421 "superior occipital gyrus" right
+5411 "superior occipital gyrus" left
+5425 "middle occipital gyrus" right
+5415 "middle occipital gyrus" left
+5426 "inferior occipital gyrus" right
+5416 "inferior occipital gyrus" left
+5360 "cuneus" right
+5350 "cuneus" left
+5720 "lingual gyrus" right
+5710 "lingual gyrus" left
+7820 "insula" right
+7810 "insula" left
+8210 Caudate "caudate nucleus" right
+8220 "caudate nucleus" left
+8110 Putamen "putamen" right
+8112 "putamen" left
+8310 "globus palladus" right
+8320 "globus palladus" left
+8410 "thalamus" right
+8420 "thalamus" left
+11000 White "corpus callosum"
+1000 "subarachnoid cerebro-spinal fluid"
+1 "third ventricle"
+1 "fourth ventricle"
+1 "lateral ventricle" right
+1 "lateral ventricle" left
+12000 BrainStem "brain stem"
+13000 "white matter"
+10000 "frontal lobe WM" right
+10000 "frontal lobe WM" left
+10000 "occipital lobe WM" right
+10000 "occipital lobe WM" left
+10000 "parietal lobe WM" right
+10000 "parietal lobe WM" left
+10000 "temporal lobe WM" right
+10000 "temporal lobe WM" left
+100 "background"
+3000 "scalp"
+1000 "skull"
+1 "dura and sinuses"
+120 "hippocampal formation" right
+130 "hippocampal formation" left
+8028 "nucleus accumbens" right
+8038 "nucleus accumbens" left
+2000 "fornix" right
+2000 "fornix" left
+10000 "posterior limb of internal capsule inc. cerebral peduncle" right
+10000 "posterior limb of internal capsule inc. cerebral peduncle" left
+2000 "subthalamic nucleus" right
+2000 "subthalamic nucleus" left
+10000 "anterior limb of internal capsule" right
+10000 "anterior limb of internal capsule" left
+2200 Cerebellum "cerebellum" right
+2210 "cerebellum" left

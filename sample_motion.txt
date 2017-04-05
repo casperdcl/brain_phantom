@@ -1,0 +1,17 @@
+SAMPLED POINTS (time in seconds ang_x ang_y ang_z T_x T_y T_z) SEE NOTE 1
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+107.000000 0.249620 0.242604 0.108815 -1.675917 1.237573 0.113672 
+200.000000 -0.920973 -0.189813 -0.054907 -0.010408 -4.570543 1.028577 
+781.000000 -1.609332 -0.333095 -0.171679 0.502290 -7.653252 1.366139 
+866.000000 -2.579373 -0.540452 -0.115488 1.471790 -11.957582 1.807189 
+968.000000 -3.008290 -0.844338 -0.468477 2.645609 -14.532572 1.950123 
+1000.00 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+
+
+NOTE 1:	Program reads in the sampled points for the time-motion curve and fits 
+        a continuous cubic spline curve to them. The motion at any time point is
+        then determined by this spline curve.
+
+        Sampled points must be in ascending order according to time. The points do not have to be uniformly spaced. The time 
+	of the last sampled point must be equal to the period for the curve.
+
