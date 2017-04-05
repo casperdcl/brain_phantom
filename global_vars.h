@@ -6,46 +6,46 @@
 
 #define q_degree 3
 #define p_degree 3
-float PI;
-int gender_flag;
+
+extern float PI;
+extern int gender_flag;
 
 /* GENERAL PARAMETERS */
-int 	act_phan_ave;
-int 	act_phan_each;
-int 	motion_option;
-float 	out_period;
-int 	out_frames;
-float 	motion_period;
-float	motion_start_ph_index;
-float	x_trans, y_trans, z_trans;
-float	x_rot, y_rot, z_rot;
+extern int 	act_phan_ave;
+extern int 	act_phan_each;
+extern int 	motion_option;
+extern float 	out_period;
+extern int 	out_frames;
+extern float 	motion_period;
+extern float	motion_start_ph_index;
+extern float	x_trans, y_trans, z_trans;
+extern float	x_rot, y_rot, z_rot;
 
-float  	pixel_width;
-float  	slice_width;
-int 	array_size;
-int 	subvoxel_index;
-int 	subvxl_index;
-int 	startslice;
-int 	endslice;
+extern float  	pixel_width;
+extern float  	slice_width;
+extern int 	array_size;
+extern int 	subvoxel_index;
+extern int 	subvxl_index;
+extern int 	startslice;
+extern int 	endslice;
 
 /*Array of surfaces for torso models*/
-TRI_MODEL tmodel[256];
+extern TRI_MODEL tmodel[256];
 
 /* For pixelizing the NURBS surfaces */
-int   txdim, tydim, tzdim;
-int   txdim2, tydim2, tzdim2;
-int   xoffset, yoffset, zoffset; /*Used to center individual structures for temporary rendering*/
-int   xoffset2, yoffset2, zoffset2; /*Used to center individual structures for temporary rendering*/
-float xspan, yspan, zspan;
+extern int   txdim, tydim, tzdim;
+extern int   txdim2, tydim2, tzdim2;
+extern int   xoffset, yoffset, zoffset; /*Used to center individual structures for temporary rendering*/
+extern int   xoffset2, yoffset2, zoffset2; /*Used to center individual structures for temporary rendering*/
+extern float xspan, yspan, zspan;
 
-float   xoff, yoff, zoff; /*Used to center torso in the final 3D image produced*/
-int     XDIM,YDIM,ZDIM,ZDIM_OUTPUT,slice_index;
+extern float   xoff, yoff, zoff; /*Used to center torso in the final 3D image produced*/
+extern int     XDIM,YDIM,ZDIM,ZDIM_OUTPUT,slice_index;
 
-float voxel_volume,subvxl_vol;
+extern float voxel_volume,subvxl_vol;
 
-float activity[256];
-int motion_flag = 0;
-int user_time_flag = 0;
-char user_motion_file[200];
-CURVE motion_curve[6];
-
+extern float activity[256];
+extern int motion_flag;
+extern int user_time_flag;
+extern char user_motion_file[200];
+extern CURVE motion_curve[6];
