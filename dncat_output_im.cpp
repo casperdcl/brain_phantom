@@ -20,7 +20,7 @@
 	--------------------------------------------------------------
 */
 #include "global_includes.h"
-#include "dncat_output_im.h"
+#include "dncat_output.h"
 #include "image.h"
 
 void	SAVE_TO_FILE(float *array, int xdim, int ydim, int zdim, char *name)

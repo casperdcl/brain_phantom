@@ -14,7 +14,7 @@
   modify the file format of the saved phantom without having
   to modify any of the other files containing the phantom code.
   **************************************************************
-	
+
   array:           contains the data to be saved
   xdim,ydim,zdim:  dimensions of data
   name:            name of file
@@ -22,7 +22,7 @@
 */
 /* STANDARD C LIBRARIES */
 #include "global_includes.h"
-#include "dncat_output_bin.h"
+#include "dncat_output.h"
 #include <string>
 
 typedef float FLOATTYPE;

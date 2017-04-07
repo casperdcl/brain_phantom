@@ -8,7 +8,7 @@
 #include "global_vars.h"      /* global variables for ncat */
 #include "constants.h"        /* global constants */
 #include "dncatsubs.h"
-#include "dncat_output_bin.h"
+#include "dncat_output.h"
 
 char  gen_parfile[64];
 char  outputbase[64];
