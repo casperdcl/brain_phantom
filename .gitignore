@@ -2,3 +2,7 @@
 *.vcxproj.filters
 *.vcxproj.user
 x64/
+*.o
+brain_phantom/
+test_1.bin
+test_log
