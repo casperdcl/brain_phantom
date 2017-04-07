@@ -37,8 +37,9 @@ def run(args):
   par = params(args.parfile)
   w = int(par["array size"])
   z = int(par["end_slice"]) - int(par["start_slice"]) + 1
-  log.info("%dx%dx%d" % (w, w, z))
+  log.info("%s:%dx%dx%d" % (args.parfile, w, w, z))
   dat = dat.reshape((z, w, w))[z // 2, :, :]
+  log.info("slice:" + 'x'.join(map(str, dat.shape)))
   Plt.fig()
   Plt.imshow(dat, cmap="jet")
   plt.show()

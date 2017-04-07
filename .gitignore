@@ -4,6 +4,7 @@
 x64/
 *.o
 brain_phantom/
-test_1.bin
-test_log
 *.exe
+*_1.bin
+*_log
+*.png
