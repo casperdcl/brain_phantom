@@ -6,7 +6,7 @@
 #include <cstdio>
 #include <cstdlib>  // exit()
 #include <cmath>  // fabs()
-#include <memory>  // memcpy()
+#include <cstring>  // strcpy, strcat, memcpy
 #include <cassert>
 
 #define NR_END 1

@@ -2,13 +2,13 @@
 /* Paul Segars   3/9/2006 */
 
 #include "global_includes.h"
-#include <string>
-
 #include "nurbs.h"            /* header file for nurbs */
 #include "global_vars.h"      /* global variables for ncat */
 #include "constants.h"        /* global constants */
 #include "dncatsubs.h"
 #include "dncat_output.h"
+
+#include <cstring>  // strcpy, strcat, memcpy
 
 char  gen_parfile[64];
 char  outputbase[64];

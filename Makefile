@@ -20,4 +20,4 @@ dncat_%: $(OBJS) dncat_output_%.o
 clean:
 	rm -f $(OBJS)
 	rm -f dncat_output_im.o dncat_output_bin.o
-	rm -f dncat_im dncat_bin
+	rm -f dncat_im dncat_bin dncat_bin.exe dncat_im.exe
