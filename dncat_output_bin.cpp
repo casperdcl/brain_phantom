@@ -23,7 +23,7 @@
 /* STANDARD C LIBRARIES */
 #include "global_includes.h"
 #include "dncat_output.h"
-#include <string>
+#include <cstring>  // strcpy, strcat, memcpy
 
 typedef float FLOATTYPE;
 
