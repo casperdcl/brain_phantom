@@ -342,14 +342,14 @@ exit(1);
 //sprintf(filename, "body%i.raw", kf);
 //Output_Triangle_Model(filename, &tmodel[21]);
 
-   printf("\nRendering....");
+   printf("\nRendering....\n");
 /*
 **  -------------------
 **  | RENDER LOOP     |
 **  -------------------
 */
    for(j = 0; j < tzdim; j++) {
-     printf("\nSlice = %i", j);
+     printf("\rSlice = %d/%d (%.1f%%)", j, tzdim, j * 100.0 / tzdim);
      /*Initialize slice image */
      for(i = 0; i < txdim*tydim; i++)
        slice[i] = -1.0;
@@ -495,6 +495,7 @@ exit(1);
             }
           }
    } /*End slice loop*/
+   printf("\rSlice = %d/%d (100%%) \n", tzdim, tzdim);
  
 //  GetVolumes(fphan_id); 
   if (act_phan_each == 1) 
