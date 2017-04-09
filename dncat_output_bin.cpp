@@ -24,6 +24,7 @@
 #include "global_includes.h"
 #include "dncat_output.h"
 #include <cstring>  // strcpy, strcat, memcpy
+#include <cstdio>  // remove
 
 typedef float FLOATTYPE;
 
@@ -42,7 +43,7 @@ void SAVE_TO_FILE(float *array, int xdim, int ydim, int zdim, char *name)
 */
   strcpy(new_name, name);
   strcat(new_name, ".bin");   /* add extension to file name*/
-  unlink(new_name);          
+  remove(new_name);
 /*
 ** WRITE TO FILE: 
 */
@@ -54,7 +55,7 @@ void SAVE_TO_FILE(float *array, int xdim, int ydim, int zdim, char *name)
   if (n != TotalPix) {
     printf("Error : fwrite return %d\n",n);
     Abort ("Failure writing pixels to output image\n");
-    unlink (new_name);
+    remove(new_name);
   }
   fclose(fp_out);
 }
