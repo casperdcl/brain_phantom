@@ -22,6 +22,8 @@ TRI_MODEL slice_tmodel;
 
 int main(int argc, char *argv[])
 {
+  setbuf(stdout, NULL);
+
   FILE *fp, *fp2;
   int i, j, k, l, kf;
   char filename[200], outfile[200], logfile[200];

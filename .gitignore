@@ -5,6 +5,4 @@ x64/
 *.o
 brain_phantom/
 *.exe
-*_1.bin
-*_log
 *.png
