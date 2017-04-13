@@ -1,5 +1,25 @@
-/* Program to produce voxelized phantoms from NURBS torso file input*/
-/* Paul Segars   3/9/2006 */
+static const char *const DOCUMENTATION =
+R"(Program to produce voxelised phantoms from NURBS torso file input
+
+Usage:
+  %s [options] <gen_par> <out_base>
+
+Options:
+  -x X  translation in mm
+  -y Y  translation in mm
+  -z Z  translation in mm
+  -X X  rotation in degrees
+  -Y Y  rotation in degrees
+  -Z Z  rotation in degrees
+
+Arguments:
+  <gen_par>   : general parameter filename. Note that start_slice should be
+                an even number > 1 to avoid artefacts.
+  <out_base>  : base string for output files
+
+Paul Segars <paul.segars@duke.edu> 2006-09-03
+Casper da Costa-Luis <casper.dcl@kcl.ac.uk> 2017-04
+)";
 
 #include "global_includes.h"
 #include "nurbs.h"            /* header file for nurbs */
@@ -93,24 +113,15 @@ int main(int argc, char *argv[])
      }
    }
 
-  if (argc < 2)
-    {
-    fprintf(stderr,"USAGE: %s [options] gen_par out_base\n\n",argv[0]); 
-    fprintf(stderr,"  gen_par: general parameter filename\n");
-    fprintf(stderr,"  out_basename: base string for output files\n\n");
-    fprintf(stderr,"       [-x] x translation in mm's\n");
-    fprintf(stderr,"       [-y] y translation in mm's\n");
-    fprintf(stderr,"       [-z] z translation in mm's\n");
-    fprintf(stderr,"       [-X] x rotation in degrees\n");
-    fprintf(stderr,"       [-Y] y rotation in degrees\n");
-    fprintf(stderr,"       [-Z] z rotation in degrees\n");    
+  if (argc < 2) {
+    fprintf(stderr, DOCUMENTATION, argv[0]);
     exit(1);
   }
   else {
     if (sscanf(*argv, "%s",gen_parfile)==0)
-       Abort("Can not get gen_parfile filename");
+      Abort("Can not get gen_parfile filename");
     if(sscanf(*++argv, "%s", outputbase)==0)          
-       Abort("Can not get output base name");
+      Abort("Can not get output base name");
   }
 
 /*
