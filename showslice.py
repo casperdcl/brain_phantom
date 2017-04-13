@@ -7,6 +7,7 @@ Arguments:
 Options:
   --log=<lvl>  : CRITICAL|WARN(ING)|[default: INFO]|DEBUG|NOTSET
   --parfile  : (default: <binfile>.rstrip('_1.bin') + '.par')
+  -n=<N>  : int, slice number (default: half way)
 """
 from __future__ import division
 import logging
@@ -18,6 +19,7 @@ import matplotlib.pyplot as plt
 import re
 
 RE_PARAMS = re.compile(r"^(\w+)\s+\:\s+(.+)$", flags=re.M)
+
 
 def params(parfile):
   log = logging.getLogger(__name__)
@@ -38,7 +40,7 @@ def run(args):
   w = int(par["array size"])
   z = int(par["end_slice"]) - int(par["start_slice"]) + 1
   log.info("%s:%dx%dx%d" % (args.parfile, w, w, z))
-  dat = dat.reshape((z, w, w))[z // 2, :, :]
+  dat = dat.reshape((z, w, w))[int(args.n) if args.n is not None else z // 2, :, :]
   log.info("slice:" + 'x'.join(map(str, dat.shape)))
   Plt.fig()
   Plt.imshow(dat, cmap="jet")

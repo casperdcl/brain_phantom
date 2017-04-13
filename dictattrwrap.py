@@ -3,4 +3,4 @@ class DictAttrWrap(object):
     self.d = dict(*a, **k)
 
   def __getattr__(self, k):
-    return self.d.get('--' + k, self.d.get('<' + k + '>'))
+    return self.d.get('--' + k, self.d.get('<' + k + '>', self.d.get('-' + k, self.d.get(k))))
