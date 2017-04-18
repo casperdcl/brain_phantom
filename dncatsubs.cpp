@@ -2383,17 +2383,11 @@ float line_vector[3], XP_ARRAY *int_points)
     TRIANGLE T;
     for(int j = 0; j < 3; j++) {
 	  // double p[3];
-
-      // POINT &p = T.vertex[j];
-      point<FLOAT> p; p = T.vertex[j];
+      POINT &p = T.vertex[j];
       // point<FLOAT> p;
-	  // p.x = T.vertex[j].x;
-	  // p.y = T.vertex[j].y;
-	  // p.z = T.vertex[j].z;
 
 	  // Translate
-
-	  p = tri->vertex[j] - line_origin;
+      p = tri->vertex[j] - line_origin;
 
       // Rotate
 
@@ -2402,7 +2396,7 @@ float line_vector[3], XP_ARRAY *int_points)
 	  // Rotate_Y(-(90.0f - PHI), p);
 	  Rotate_Y(cosPhi, sinPhi, p);
 
-      T.vertex[j] = p;
+      // T.vertex[j] = p;
     }
 
     if(Test_extents_tri(T))

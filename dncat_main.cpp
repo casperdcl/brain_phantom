@@ -64,7 +64,6 @@ int main(int argc, char *argv[])
 
   POINT C;
 
-  PI = 4.0*atan(1.0);
   for(i = 0; i < 6; i++)
     prev_motion[i] = 0.0;
 /*
