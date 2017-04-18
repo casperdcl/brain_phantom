@@ -4,7 +4,7 @@
 
 #include "nurbs.h"
 
-float PI;
+extern const float PI = 3.14159265358979323846264338328f;
 int gender_flag;
 
 /* GENERAL PARAMETERS */

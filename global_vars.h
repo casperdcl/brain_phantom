@@ -7,7 +7,7 @@
 #define q_degree 3
 #define p_degree 3
 
-extern float PI;
+extern const float PI;
 extern int gender_flag;
 
 /* GENERAL PARAMETERS */
