@@ -15,31 +15,41 @@ typedef double PARAMETER;
 #define FREE_ARG char*
 
 
-typedef struct point
+template<typename F=float>
+struct point
 {
-  float x;
-  float y;
-  float z;
+  F x;
+  F y;
+  F z;
 
-  float &operator[](int i) {
-	  switch (i) {
-	  case 0: return x;
-	  case 1: return y;
-	  case 2: return z;
-	  }
-	  throw std::length_error("Index out of bounds");
+  F &operator[](int i) {
+#if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
+  if(0 > i || i > 2)
+    throw std::length_error("Index out of bounds");
+#else
+	  return reinterpret_cast<F *>(this)[i];
+#endif
   }
 
-  template<typename FloatType>
-  point &operator=(FloatType other[3]) {
+  const F &operator[](int i) const {
+#if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
+  if(0 > i || i > 2)
+    throw std::length_error("Index out of bounds");
+#else
+	  return reinterpret_cast<const F *>(this)[i];
+#endif
+  }
+
+  template<typename FloatArrayType>
+  point<F> &operator=(const FloatArrayType &other) {
 	  x = other[0];
 	  y = other[1];
 	  z = other[2];
 	  return *this;
   }
 
-  template<typename FloatType>
-  point operator-(FloatType other[3]) {
+  template<typename FloatArrayType>
+  point<F> operator-(const FloatArrayType &other) {
 	  point res;
 	  res.x = x - other[0];
 	  res.y = y - other[1];
@@ -47,7 +57,8 @@ typedef struct point
 	  return res;
   }
 
-} POINT;
+};
+typedef point<float> POINT;
 
 typedef struct list_node{
   POINT o_start;

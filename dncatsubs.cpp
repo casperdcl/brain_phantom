@@ -2363,18 +2363,20 @@ void Intersect_tri(TRIANGLE T, int organ_id, XP_ARRAY *int_points)
 void Find_Intersections_tri(TRI_MODEL *tri_model, int organ_id, float line_origin[3],
 float line_vector[3], XP_ARRAY *int_points)
 {
-  const float magnitude = sqrt(
+  typedef float FLOAT;
+
+  const FLOAT magnitude = sqrt(
 	  line_vector[0]*line_vector[0] +
 	  line_vector[1]*line_vector[1] +
 	  line_vector[2]*line_vector[2]);
   // const float PHI = 180.0f / PI * acos(line_vector[2] / magnitude);
-  const float PHIRad = acos(line_vector[2] / magnitude) - PI / 2.0f;
+  const FLOAT PHIRad = acos(line_vector[2] / magnitude) - PI / 2.0f;
   // const float THETA = Calc_Angle(line_vector[0], line_vector[1]);
-  const float THETARad = Calc_Angle(line_vector[0], line_vector[1]) * PI / 180.0f;
+  const FLOAT THETARad = Calc_Angle(line_vector[0], line_vector[1]) * PI / 180.0f;
 
   // speed optimisation
-  const float cosPhi = cos(PHIRad), sinPhi = sin(PHIRad);
-  const float cosTheta = cos(THETARad), sinTheta = sin(THETARad);
+  const FLOAT cosPhi = cos(PHIRad), sinPhi = sin(PHIRad);
+  const FLOAT cosTheta = cos(THETARad), sinTheta = sin(THETARad);
 
   for(TRIANGLE *tri = tri_model->tris, *triEnd = tri_model->tris + tri_model->num_tris;
       tri != triEnd; tri++) {
@@ -2382,7 +2384,12 @@ float line_vector[3], XP_ARRAY *int_points)
     for(int j = 0; j < 3; j++) {
 	  // double p[3];
 
-      POINT &p = T.vertex[j];
+      // POINT &p = T.vertex[j];
+      point<FLOAT> p; p = T.vertex[j];
+      // point<FLOAT> p;
+	  // p.x = T.vertex[j].x;
+	  // p.y = T.vertex[j].y;
+	  // p.z = T.vertex[j].z;
 
 	  // Translate
 
@@ -2395,7 +2402,7 @@ float line_vector[3], XP_ARRAY *int_points)
 	  // Rotate_Y(-(90.0f - PHI), p);
 	  Rotate_Y(cosPhi, sinPhi, p);
 
-      // T.vertex[j] = p;
+      T.vertex[j] = p;
     }
 
     if(Test_extents_tri(T))
