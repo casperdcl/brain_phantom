@@ -22,7 +22,7 @@ struct point
   F y;
   F z;
 
-  F &operator[](int i) {
+  /*F &operator[](int i) {
 #if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
   if(0 > i || i > 2)
     throw std::length_error("Index out of bounds");
@@ -38,7 +38,7 @@ struct point
 #else
 	  return reinterpret_cast<const F *>(this)[i];
 #endif
-  }
+  }*/
 
   template<typename FloatArrayType>
   point<F> &operator=(const FloatArrayType &other) {

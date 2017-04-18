@@ -1276,6 +1276,7 @@ void Dabs(double num, double *result)
 /*---------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------*/
 template<typename FloatType, typename FloatArrayType>
+__forceinline
 void Rotate_Y(FloatType cosRot, FloatType sinRot, FloatArrayType p)
 {
 	// Rotate about y
@@ -1306,6 +1307,7 @@ void Rotate_Y(FloatType y_rot, FloatArrayType p)
 /*---------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------*/
 template<typename FloatType, typename FloatArrayType>
+__forceinline
 void Rotate_Z(FloatType cosRot, FloatType sinRot, FloatArrayType p)
 /*---------------------------------------------------------------------------------------
 **  This subroutine is used to rotate a point (p) about the z axis.
@@ -2366,35 +2368,35 @@ float line_vector[3], XP_ARRAY *int_points)
   typedef float FLOAT;
 
   const FLOAT magnitude = sqrt(
-	  line_vector[0]*line_vector[0] +
-	  line_vector[1]*line_vector[1] +
-	  line_vector[2]*line_vector[2]);
+      line_vector[0]*line_vector[0] +
+      line_vector[1]*line_vector[1] +
+      line_vector[2]*line_vector[2]);
   // const float PHI = 180.0f / PI * acos(line_vector[2] / magnitude);
-  const FLOAT PHIRad = acos(line_vector[2] / magnitude) - PI / 2.0f;
+  const double phiRad = acos(line_vector[2] / magnitude) - PI / 2.0;
   // const float THETA = Calc_Angle(line_vector[0], line_vector[1]);
-  const FLOAT THETARad = Calc_Angle(line_vector[0], line_vector[1]) * PI / 180.0f;
+  const double thetaRad = Calc_Angle(line_vector[0], line_vector[1]) * PI / 180.0;
 
   // speed optimisation
-  const FLOAT cosPhi = cos(PHIRad), sinPhi = sin(PHIRad);
-  const FLOAT cosTheta = cos(THETARad), sinTheta = sin(THETARad);
+  const FLOAT cosPhi = cos(phiRad), sinPhi = sin(phiRad);
+  const FLOAT cosTheta = cos(thetaRad), sinTheta = sin(thetaRad);
 
   for(TRIANGLE *tri = tri_model->tris, *triEnd = tri_model->tris + tri_model->num_tris;
       tri != triEnd; tri++) {
     TRIANGLE T;
-    for(int j = 0; j < 3; j++) {
-	  // double p[3];
-      POINT &p = T.vertex[j];
-      // point<FLOAT> p;
+    for(int j = 0; j < 3; j++)
+    {
+      // double p[3];
+      // point<double> p;
+	  POINT &p = T.vertex[j];
 
-	  // Translate
+      // Translate
       p = tri->vertex[j] - line_origin;
 
       // Rotate
-
-	  // Rotate_Z(THETA, p);
-	  Rotate_Z(cosTheta, sinTheta, p);
-	  // Rotate_Y(-(90.0f - PHI), p);
-	  Rotate_Y(cosPhi, sinPhi, p);
+      // Rotate_Z(THETA, p);
+      Rotate_Z(cosTheta, sinTheta, reinterpret_cast<float *>(&p));
+      // Rotate_Y(-(90.0f - PHI), p);
+      Rotate_Y(cosPhi, sinPhi, reinterpret_cast<float *>(&p));
 
       // T.vertex[j] = p;
     }
