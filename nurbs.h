@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdexcept>
+
 typedef long INDEX;
 typedef short FLAG;
 typedef int INTEGER;
@@ -18,6 +20,33 @@ typedef struct point
   float x;
   float y;
   float z;
+
+  float &operator[](int i) {
+	  switch (i) {
+	  case 0: return x;
+	  case 1: return y;
+	  case 2: return z;
+	  }
+	  throw std::length_error("Index out of bounds");
+  }
+
+  template<typename FloatType>
+  point &operator=(FloatType other[3]) {
+	  x = other[0];
+	  y = other[1];
+	  z = other[2];
+	  return *this;
+  }
+
+  template<typename FloatType>
+  point operator-(FloatType other[3]) {
+	  point res;
+	  res.x = x - other[0];
+	  res.y = y - other[1];
+	  res.z = z - other[2];
+	  return res;
+  }
+
 } POINT;
 
 typedef struct list_node{
