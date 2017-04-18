@@ -1,8 +1,10 @@
-#include "dncatsubs.h"
 #include "global_includes.h"
+#include "dncatsubs.h"
 #include "nurbs.h"
 #include "global_vars.h"
 #include "constants.h"
+
+#include <algorithm>
 
 /*--------------------------------------------------------------*/   
 /*--------------------------------------------------------------*/   
@@ -62,7 +64,7 @@ void READ_BRAIN_CURVES(char *filename, CURVE motion_curve[6])
 {
   FILE  *fp;
   int num, flag, count;
-  char comma;
+  // char comma;
   float time, ang_x, ang_y, ang_z, t_x, t_y, t_z, period;
   int i;
 
@@ -1273,54 +1275,65 @@ void Dabs(double num, double *result)
 
 /*---------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------*/
-void Rotate_Y(float y_rot, double *p)
+template<typename FloatType, typename FloatArrayType>
+void Rotate_Y(FloatType cosRot, FloatType sinRot, FloatArrayType p)
+{
+	// Rotate about y
+	const FloatType x = p[0] * cosRot - p[2] * sinRot;
+	const FloatType z = p[0] * sinRot + p[2] * cosRot;
+
+	p[2] = z;
+	p[0] = x;
+}
+template<typename FloatType, typename FloatArrayType>
+void Rotate_Y(FloatType y_rot, FloatArrayType p)
 /*---------------------------------------------------------------------------------------
 **  This subroutine is used to rotate a point (p) about the y axis.
 **  y_rot = angle to rotate about the y-axis
 **---------------------------------------------------------------------------------------
 */
 {
-  double result[3];
-  float angle_rad;
-  float cosine, sine;
+  const FloatType angle_rad = y_rot * (PI / 180.0f);
+  const FloatType cosine = cos(angle_rad);
+  const FloatType sine = sin(angle_rad);
 
-  angle_rad = y_rot * PI / 180.0;
- 
-  cosine = cos(angle_rad);
-  sine = sin(angle_rad);
-
-/* Rotate about y */
-  result[0] = p[0]*cosine - p[2]*sine;
-  result[2] = p[0]*sine + p[2]*cosine;
-
-  p[0] = result[0]; p[2] = result[2];
+  // Rotate about y
+  Rotate_Y(cosine, sine, p);
 }
 /*---------------------------------------------------------------------------------------*/
 
 
 /*---------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------*/
-void Rotate_Z(float z_rot, double *p)
+template<typename FloatType, typename FloatArrayType>
+void Rotate_Z(FloatType cosRot, FloatType sinRot, FloatArrayType p)
 /*---------------------------------------------------------------------------------------
 **  This subroutine is used to rotate a point (p) about the z axis.
 **  z_rot = angle to rotate about the z-axis
 **---------------------------------------------------------------------------------------
 */
 {
-  double result[3];
-  float cosine, sine;
-  float angle_rad;
+	// Rotate about z
+	const FloatType x = p[0] * cosRot + p[1] * sinRot;
+	const FloatType y = -p[0] * sinRot + p[1] * cosRot;
 
-  angle_rad = z_rot * PI / 180.0;
+	p[1] = y;
+	p[0] = x;
+}
+template<typename FloatType, typename FloatArrayType>
+void Rotate_Z(FloatType z_rot, FloatArrayType p)
+/*---------------------------------------------------------------------------------------
+**  This subroutine is used to rotate a point (p) about the z axis.
+**  z_rot = angle to rotate about the z-axis
+**---------------------------------------------------------------------------------------
+*/
+{
+  const FloatType angle_rad = z_rot * (PI / 180.0f);
+  const FloatType cosine = cos(angle_rad);
+  const FloatType sine = sin(angle_rad);
   
-  cosine = cos(angle_rad);
-  sine = sin(angle_rad);
-  
-/* Rotate about z */
-  result[0] = p[0]*cosine + p[1]*sine;
-  result[1] = -p[0]*sine + p[1]*cosine;
-
-  p[0] = result[0]; p[1] = result[1];
+  // Rotate about z
+  Rotate_Z(cosine, sine, p);
 }
 /*---------------------------------------------------------------------------------------*/
 
@@ -1834,18 +1847,17 @@ float dot_product(float *u, float *v)
    
 void GetVolumes(float *out_pixel)
 {
-  unsigned int index;
   int ID;
   float vol[END_MODELS+1];
 
-  for(index = 0; index <= END_MODELS; index++)
+  for(unsigned index = 0; index <= END_MODELS; index++)
     vol[index] = 0.0;
 
-  for(index = 0; index < XDIM*YDIM*ZDIM_OUTPUT; index++)
-    {
+  for(unsigned index = 0; index < XDIM*YDIM*ZDIM_OUTPUT; index++)
+  {
     ID = out_pixel[index];
     vol[ID]++;
-    }
+  }
 
 printf("\nVolume of superior frontal gyrus right                                    %f", vol[10]);
 printf("\nVolume of superior frontal gyrus left                                     %f", vol[70]);
@@ -2351,39 +2363,44 @@ void Intersect_tri(TRIANGLE T, int organ_id, XP_ARRAY *int_points)
 void Find_Intersections_tri(TRI_MODEL *tri_model, int organ_id, float line_origin[3],
 float line_vector[3], XP_ARRAY *int_points)
 {
-  int i, j, k;
-  TRIANGLE T;
-  double p[3];
-  double THETA, PHI;
-  float magnitude;
+  const float magnitude = sqrt(
+	  line_vector[0]*line_vector[0] +
+	  line_vector[1]*line_vector[1] +
+	  line_vector[2]*line_vector[2]);
+  // const float PHI = 180.0f / PI * acos(line_vector[2] / magnitude);
+  const float PHIRad = acos(line_vector[2] / magnitude) - PI / 2.0f;
+  // const float THETA = Calc_Angle(line_vector[0], line_vector[1]);
+  const float THETARad = Calc_Angle(line_vector[0], line_vector[1]) * PI / 180.0f;
 
-  magnitude = sqrt(line_vector[0]*line_vector[0] + line_vector[1]*line_vector[1] + line_vector[2]*line_vector[2]);
-  PHI = 180.0/PI*acos(line_vector[2]/magnitude);
-  THETA = Calc_Angle(line_vector[0], line_vector[1]);
+  // speed optimisation
+  const float cosPhi = cos(PHIRad), sinPhi = sin(PHIRad);
+  const float cosTheta = cos(THETARad), sinTheta = sin(THETARad);
 
-  for(i = 0; i < tri_model->num_tris; i++)
-    {
-    for(j = 0; j < 3; j++)
-      {
-      p[0] = tri_model->tris[i].vertex[j].x;
-      p[1] = tri_model->tris[i].vertex[j].y;
-      p[2] = tri_model->tris[i].vertex[j].z;
+  for(TRIANGLE *tri = tri_model->tris, *triEnd = tri_model->tris + tri_model->num_tris;
+      tri != triEnd; tri++) {
+    TRIANGLE T;
+    for(int j = 0; j < 3; j++) {
+	  // double p[3];
 
-      /* Translate */
-      p[0] -= line_origin[0]; p[1] -= line_origin[1]; p[2] -= line_origin[2];
+      POINT &p = T.vertex[j];
 
-      /* Rotate */
-      Rotate_Z(THETA, p);
-      Rotate_Y(-(90.0-PHI), p);
+	  // Translate
 
-      T.vertex[j].x = p[0];
-      T.vertex[j].y = p[1];
-      T.vertex[j].z = p[2];
-      }
+	  p = tri->vertex[j] - line_origin;
+
+      // Rotate
+
+	  // Rotate_Z(THETA, p);
+	  Rotate_Z(cosTheta, sinTheta, p);
+	  // Rotate_Y(-(90.0f - PHI), p);
+	  Rotate_Y(cosPhi, sinPhi, p);
+
+      // T.vertex[j] = p;
+    }
 
     if(Test_extents_tri(T))
       Intersect_tri(T, organ_id, int_points);
-    }
+  }
 }
 
 int Check_Y_Boundary2(TRI_MODEL slice_tmodel, int x, int y, int z, int intensity)
@@ -2460,48 +2477,34 @@ int Check_Y_Boundary2(TRI_MODEL slice_tmodel, int x, int y, int z, int intensity
 
 void Fill_tri(TRI_MODEL slice_tmodel, int intensity, float *out, int z)
 {
-   int x, y;
-   unsigned long index;
-   int diff;
-   int edge[200];
-   int edge_counter;
-   int counter = 0;
-   int flag = 0;
-   int i;
+  unsigned long index;
+  int edge[200];
+  int edge_counter;
+  // int counter = 0;
+  int i;
 
-   for(i = 0; i < 200; i++)
-     edge[i] = -1;
+  std::fill_n(edge, 200, -1);  // is this really required?
 
-   for(y = 0; y < tydim; y++)
-     {
-     edge_counter = 0;
-     for(x = 0; x < txdim; x++)
-       {
-       index = x+ y*txdim;
-       diff = (int)out[index];
-       if( diff == intensity)
-         {
-         edge[edge_counter] = x;
-         edge_counter++;
-         }
-       }
-     while(edge_counter!=0)
-       {
-       flag = 0;
-       if(edge_counter-2 >=0)
-         {
-         if(edge[edge_counter-1] != -1 && edge[edge_counter-2] != -1)
-           {
-           if(edge[edge_counter-1] - edge[edge_counter-2] > 1)
-             flag = Check_Y_Boundary2(slice_tmodel, (edge[edge_counter-2]+edge[edge_counter-1])/2, y, z, intensity);
-           if(flag)
-             {
-             G_line(edge[edge_counter-2], tydim-y, edge[edge_counter-1], tydim-y, intensity, out);
-             flag = 0;
-             }
-           }
-         }
-       edge_counter--;
-       }
-     }
+  for (int y = 0; y < tydim; ++y)
+  {
+    edge_counter = 0;
+    float *yslice = out + (y * txdim);
+    for (int x = 0; x < txdim; ++x)
+    {
+      if (int(yslice[x]) == intensity)
+        edge[edge_counter++] = x;
+    }
+    for(int e = edge[--edge_counter], ePrev; edge_counter > 0; --edge_counter)
+    {
+      ePrev = edge[edge_counter - 1];
+      if (e != -1
+       && ePrev != -1
+       && e - ePrev > 1
+	   && Check_Y_Boundary2(slice_tmodel, (ePrev + e) / 2, y, z, intensity))
+      {
+        G_line(ePrev, tydim - y, e, tydim - y, intensity, out);
+      }
+	  e = ePrev;
+    }
+  }
 }
