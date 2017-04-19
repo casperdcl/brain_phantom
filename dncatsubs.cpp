@@ -5,6 +5,7 @@
 #include "constants.h"
 
 #include <algorithm>
+#include <numeric>
 
 /*--------------------------------------------------------------*/   
 /*--------------------------------------------------------------*/   
@@ -944,34 +945,55 @@ void lp_intersection(double *p0, double *p1, int z, int *result, int *flag)
     *flag = 2;
 }
 
-
-void cross_product(double *u, double *v, double *result)
+/*void cross_product(double *u, double *v, double *result)
 {
-  result[0] = u[1]*v[2] - u[2]*v[1];
-  result[1] = -(u[0]*v[2] - u[2]*v[0]);
-  result[2] = u[0]*v[1] - u[1]*v[0];
-}   
+  result[0] = u[1] * v[2] - u[2] * v[1];
+  result[1] = u[2] * v[0] - u[0] * v[2];
+  result[2] = u[0] * v[1] - u[1] * v[0];
+}*/
 
-void Plane_eqn(double *p1, double *p2, double *p3, double *A, double *B, double *C, double *D)
+template<typename FloatType=double>
+void Plane_eqn(FloatType *p1, FloatType *p2, FloatType *p3, FloatType *A, FloatType *B, FloatType *C, FloatType *D)
 {
-  double v1[3], v2[3];
-  double result[3];
+  // FloatType v1[3], v2[3];
+  // FloatType result[3];
 
-  v1[0] = p2[0] - p1[0];
-  v1[1] = p2[1] - p1[1];
-  v1[2] = p2[2] - p1[2];
+  // for (unsigned i = 0; i < 3; ++i) v1[i] = p2[i] - p1[i];
+  point<FloatType> v1 = *reinterpret_cast<point<FloatType> *>(p2) - p1;
 
-  v2[0] = p3[0] - p1[0];
-  v2[1] = p3[1] - p1[1];
-  v2[2] = p3[2] - p1[2];
+  // for (unsigned i = 0; i < 3; ++i) v2[i] = p3[i] - p1[i];
+  point<FloatType> v2 = *reinterpret_cast<point<FloatType> *>(p3) - p1;
 
-  cross_product(v1, v2, result);
+  // cross_product(v1, v2, result);
+  point<FloatType> result = v1 ^ v2;
 
-  *A = result[0];
-  *B = result[1];
-  *C = result[2];
+  *A = result.x;
+  *B = result.y;
+  *C = result.z;
 
-  *D = -result[0] * p1[0] - result[1] * p1[1] - result[2] * p1[2];  
+  // *D =  
+  //   - result[0] * p1[0]
+  //   - result[1] * p1[1]
+  //   - result[2] * p1[2];
+  *D = -(result * p1);
+}
+
+template<typename FloatTypeI = double, typename FloatTypeO = FloatTypeI>
+void Plane_eqn
+  ( const point<FloatTypeI> &p1
+  , const point<FloatTypeI> &p2
+  , const point<FloatTypeI> &p3
+  , FloatTypeO *A
+  , FloatTypeO *B
+  , FloatTypeO *C
+  , FloatTypeO *D
+  )
+{
+  point<FloatTypeI> result = (p2 - p1) ^ (p3 - p1);
+  *A = static_cast<FloatTypeO>(result.x);
+  *B = static_cast<FloatTypeO>(result.y);
+  *C = static_cast<FloatTypeO>(result.z);
+  *D = static_cast<FloatTypeO>(-(result * p1));
 }
 
 
@@ -2145,10 +2167,7 @@ void Read_Triangle_ModelVTK(char *filename, TRI_MODEL *tmodel)
     return;
     }
 
-  NEXTLINE(fp);
-  NEXTLINE(fp);
-  NEXTLINE(fp);
-  NEXTLINE(fp);
+  for (unsigned char i = 0; i < 4; i++) NEXTLINE(fp);
   fscanf(fp, "%s %i %s", line, &num_points, line);
   for(i = 0; i < num_points; i++)
     fscanf(fp, "%f %f %f", &P[i].x, &P[i].y, &P[i].z);
@@ -2269,41 +2288,41 @@ int Test_extents_tri(TRIANGLE T)
    return 0;
 }
 
-int Check_point(float xint, TRIANGLE T)
+int Check_point(float xint, const TRIANGLE &T)
 /* Checks to see if point is inside the triangle */
 {
-  float angle = 0;
-  float v1[4], v2[4], v3[4];
+  static const float eps = 1e-4f;
+  if(xint >= -eps)
+  {
+    // float angle = 0.0;
+    // float v1[4], v2[4], v3[4];
+    // v1[1] = T.vertex[0].x - xint;
+    // v1[2] = T.vertex[0].y - 0;
+    // v1[3] = T.vertex[0].z - 0;
+    // normalize(v1);
+	// 
+    // v2[1] = T.vertex[1].x - xint;
+    // v2[2] = T.vertex[1].y - 0;
+    // v2[3] = T.vertex[1].z - 0;
+    // normalize(v2);
+	// 
+    // v3[1] = T.vertex[2].x - xint;
+    // v3[2] = T.vertex[2].y - 0;
+    // v3[3] = T.vertex[2].z - 0;
+    // normalize(v3);
+	// 
+    // angle += acos(dot_product(v1, v2));
+    // angle += acos(dot_product(v2, v3));
+    // angle += acos((double)dot_product(v3, v1));
+    POINT v1 = T.vertex[0]; v1.x -= xint;
+    POINT v2 = T.vertex[1]; v2.x -= xint;
+    POINT v3 = T.vertex[2]; v3.x -= xint;
+	float angle = v1.angle(v2) + v2.angle(v3) + v3.angle(v1);
 
-  if(xint >= 0)
-    {
-    angle = 0.0;
-    v1[1] = T.vertex[0].x - xint;
-    v1[2] = T.vertex[0].y - 0;
-    v1[3] = T.vertex[0].z - 0;
-    normalize(v1);
-
-    v2[1] = T.vertex[1].x - xint;
-    v2[2] = T.vertex[1].y - 0;
-    v2[3] = T.vertex[1].z - 0;
-    normalize(v2);
-
-    v3[1] = T.vertex[2].x - xint;
-    v3[2] = T.vertex[2].y - 0;
-    v3[3] = T.vertex[2].z - 0;
-    normalize(v3);
-
-    angle += acos(dot_product(v1, v2));
-    angle += acos(dot_product(v2, v3));
-    angle += acos((double)dot_product(v3, v1));
-
-    if(fabs(angle - 2*PI) < 0.0001)
+    if(fabs(angle - 2*PI) < eps)
       return 1;
-    else
-      return 0;
-    }
-  else
-    return 0;
+  }
+  return 0;
 }
 
 void Intersect_tri(TRIANGLE T, int organ_id, XP_ARRAY *int_points)
@@ -2313,23 +2332,24 @@ void Intersect_tri(TRIANGLE T, int organ_id, XP_ARRAY *int_points)
   int count, count2;
   int i, j;
   int flag;
-  double v1[3], v2[3], v3[3];
+  // double v1[3], v2[3], v3[3];
+  // 
+  // v1[0] = T.vertex[0].x; v1[1] = T.vertex[0].y; v1[2] = T.vertex[0].z;
+  // v2[0] = T.vertex[1].x; v2[1] = T.vertex[1].y; v2[2] = T.vertex[1].z;
+  // v3[0] = T.vertex[2].x; v3[1] = T.vertex[2].y; v3[2] = T.vertex[2].z;
 
-  v1[0] = T.vertex[0].x; v1[1] = T.vertex[0].y; v1[2] = T.vertex[0].z;
-  v2[0] = T.vertex[1].x; v2[1] = T.vertex[1].y; v2[2] = T.vertex[1].z;
-  v3[0] = T.vertex[2].x; v3[1] = T.vertex[2].y; v3[2] = T.vertex[2].z;
-
-  Plane_eqn(v1, v2, v3, &A, &B, &C, &D);
+  // Plane_eqn(v1, v2, v3, &A, &B, &C, &D);
+  Plane_eqn(T.vertex[0], T.vertex[1], T.vertex[2], &A, &B, &C, &D);
   if(A != 0.0)
     xint = -D/A;
-
-  if(xint <= 0)
-    {
+  if (xint <= 0)
+    xint = std::accumulate(T.vertex, T.vertex + 3, 0.0f, [](float sum, POINT &p) {return sum + p.x; }) / 3.0;
+    /*{
     xint = 0.0;
     for(i = 0; i < 3; i++)
       xint += T.vertex[i].x;
     xint = xint / 3.0;
-    }
+    }*/
 
   if(Check_point(xint, T))
     {
