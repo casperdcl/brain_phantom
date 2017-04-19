@@ -22,41 +22,68 @@ struct point
   F y;
   F z;
 
-  /*F &operator[](int i) {
-#if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
-  if(0 > i || i > 2)
-    throw std::length_error("Index out of bounds");
-#else
-	  return reinterpret_cast<F *>(this)[i];
-#endif
+  F &operator[](int i) {
+  #if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
+    if(0 > i || i > 2)
+      throw std::length_error("Index out of bounds");
+  #else
+    return reinterpret_cast<F *>(this)[i];
+  #endif
   }
 
   const F &operator[](int i) const {
-#if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
-  if(0 > i || i > 2)
-    throw std::length_error("Index out of bounds");
-#else
-	  return reinterpret_cast<const F *>(this)[i];
-#endif
-  }*/
+  #if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
+    if(0 > i || i > 2)
+      throw std::length_error("Index out of bounds");
+  #else
+    return reinterpret_cast<const F *>(this)[i];
+  #endif
+  }
 
   template<typename FloatArrayType>
   point<F> &operator=(const FloatArrayType &other) {
-	  x = other[0];
-	  y = other[1];
-	  z = other[2];
-	  return *this;
+    x = other[0];
+    y = other[1];
+    z = other[2];
+    return *this;
   }
 
   template<typename FloatArrayType>
-  point<F> operator-(const FloatArrayType &other) {
-	  point res;
-	  res.x = x - other[0];
-	  res.y = y - other[1];
-	  res.z = z - other[2];
-	  return res;
+  point<F> operator-(const FloatArrayType &other) const {
+    point<F> res;
+    res.x = x - other[0];
+    res.y = y - other[1];
+    res.z = z - other[2];
+    return res;
   }
 
+  // cross product
+  template<typename FloatArrayType>
+  point<F> operator^(const FloatArrayType &other) const {
+    point<F> res;
+    res.x = y * other[2] - z * other[1];
+    res.y = z * other[0] - x * other[2];
+    res.z = x * other[1] - y * other[0];
+    return res;
+  }
+
+  // dot product
+  template<typename FloatArrayType>
+  F operator*(const FloatArrayType &other) const {
+    return x * other[0] + y * other[1] + z * other[2];
+  }
+
+  F magSq() const { return x*x + y*y + z*z; }
+  F mag() const { return sqrt(magSq()); }
+
+  template<typename FloatArrayType>
+  F angle(const FloatArrayType &other) const {
+	return acos(*this * other /
+      (sqrt(magSq() *
+       ( other[0] * other[0]
+       + other[1] * other[1]
+       + other[2] * other[2]))));
+  }
 };
 typedef point<float> POINT;
 
