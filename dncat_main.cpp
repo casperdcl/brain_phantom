@@ -211,11 +211,11 @@ int main(int argc, char *argv[])
 
  
   for(i = 0; i <= END_MODELS; i++)
-    {
+  {
     tmodel[i].num_tris = 0;
-    sprintf(filename, "t%i.vtk", i);
+    sprintf(filename, "vtk/t%i.vtk", i);
     Read_Triangle_ModelVTK(filename, &tmodel[i]);
-    }
+  }
 
   slice_tmodel.tris = tri_vector(0, 20000);
 
