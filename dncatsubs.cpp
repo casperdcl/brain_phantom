@@ -1298,7 +1298,11 @@ void Dabs(double num, double *result)
 /*---------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------*/
 template<typename FloatType, typename FloatArrayType>
+#ifdef WIN32
 __forceinline
+#else
+inline
+#endif
 void Rotate_Y(FloatType cosRot, FloatType sinRot, FloatArrayType p)
 {
 	// Rotate about y
@@ -1329,7 +1333,11 @@ void Rotate_Y(FloatType y_rot, FloatArrayType p)
 /*---------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------*/
 template<typename FloatType, typename FloatArrayType>
+#ifdef WIN32
 __forceinline
+#else
+inline
+#endif
 void Rotate_Z(FloatType cosRot, FloatType sinRot, FloatArrayType p)
 /*---------------------------------------------------------------------------------------
 **  This subroutine is used to rotate a point (p) about the z axis.

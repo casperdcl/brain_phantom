@@ -1,5 +1,5 @@
 CXX=g++
-CFLAGS=-O6 -g -Wall
+CFLAGS=-O6 -g -Wall -std=c++11
 #-I/usr/recon/lib -I/usr/image/lib -L/usr/recon/lib -L/usr/image/lib 
 
 LFLAGS=-lm
