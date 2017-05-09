@@ -1,12 +1,12 @@
 CXX=g++
-CFLAGS=-O6 -g -Wall -std=c++11
+CFLAGS=-O6 -g -Wall -std=c++11 -Iinclude
 #-I/usr/recon/lib -I/usr/image/lib -L/usr/recon/lib -L/usr/image/lib 
 
 LFLAGS=-lm
 #-lim
 
-SRCS=$(addsuffix .cpp,dncat_main dncatsubs global_vars nurbs)
-OBJS=$(SRCS:%.cpp=%.o)
+SRCS=$(addprefix src/,$(addsuffix .cpp,dncat_main dncatsubs global_vars nurbs))
+OBJS=$(SRCS:src/%.cpp=%.o)
 
 run: dncat_bin test.par
 	./$^ test
@@ -18,7 +18,7 @@ all: dncat_bin
 dncat_%: $(OBJS) dncat_output_%.o
 	$(CXX) $(CFLAGS) -o $@ $^ $(LFLAGS)
 
-%.o: %.cpp
+%.o: src/%.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
 clean:
