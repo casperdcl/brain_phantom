@@ -12,7 +12,7 @@ including the ability to simulate rigid motion of the brain
 Usage
 -----
 
-(Re)compile using ``make`` or ``Visual Studio``.
+(Re)compile using ``make``, or use ``CMake`` (e.g. for ``Visual Studio``).
 Then run ``dncat_bin`` (without arguments) for help:
 
 .. code:: sh

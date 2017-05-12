@@ -7,3 +7,4 @@ brain_phantom/
 *.exe
 *.png
 dncat_bin
+build/
