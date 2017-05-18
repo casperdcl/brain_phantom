@@ -2336,7 +2336,7 @@ int Check_point(float xint, const TRIANGLE &T)
 void Intersect_tri(TRIANGLE T, int organ_id, XP_ARRAY *int_points)
 {
   double A,B,C,D;
-  double xint, min_error;
+  double xint = -1, min_error;
   int count, count2;
   int i, j;
   int flag;
@@ -2348,46 +2348,51 @@ void Intersect_tri(TRIANGLE T, int organ_id, XP_ARRAY *int_points)
 
   // Plane_eqn(v1, v2, v3, &A, &B, &C, &D);
   Plane_eqn(T.vertex[0], T.vertex[1], T.vertex[2], &A, &B, &C, &D);
-  if(A != 0.0)
-    xint = -D/A;
+  if (abs(A) > std::numeric_limits<double>::min())
+	xint = -D / A;
+  // else xint = std::numeric_limits<double>::max() * (signbit(D) == signbit(A) ? -1 : 1);
+
   if (xint <= 0)
-    xint = std::accumulate(T.vertex, T.vertex + 3, 0.0f, [](float sum, POINT &p) {return sum + p.x; }) / 3.0;
-    /*{
-    xint = 0.0;
+    xint = std::accumulate(T.vertex, T.vertex + 3, 0.0f,
+		[](float sum, POINT &p) {return sum + p.x; }) / 3.0;
+  /*{
+    xint = 0;
     for(i = 0; i < 3; i++)
       xint += T.vertex[i].x;
-    xint = xint / 3.0;
-    }*/
+    xint /= 3;
+  }*/
 
   if(Check_point(xint, T))
-    {
+  {
     if(int_points->length == 0)
-      {
+    {
       int_points->length = 1;
       int_points->xp[0].x = xint;
       int_points->xp[0].organ_id = organ_id;
-      }
+    }
     else
-      {
+    {
       count = 0;
       flag = 1;
       while(count < int_points->length && flag)
+	  {
         if(xint > int_points->xp[count].x)
           count++;
         else
           flag = 0;
+      }
 
       for(count2 = int_points->length; count2 > count; count2--)
-        {
+      {
         int_points->xp[count2].x = int_points->xp[count2-1].x;
         int_points->xp[count2].organ_id = int_points->xp[count2-1].organ_id;
-        }
+      }
 
       int_points->xp[count].x = xint;
       int_points->xp[count].organ_id = organ_id;
       int_points->length++;
-      }
     }
+  }
 }
 
 void Find_Intersections_tri(TRI_MODEL *tri_model, int organ_id, float line_origin[3],
@@ -2508,8 +2513,7 @@ int Check_Y_Boundary2(TRI_MODEL slice_tmodel, int x, int y, int z, int intensity
 
 void Fill_tri(TRI_MODEL slice_tmodel, int intensity, float *out, int z)
 {
-  unsigned long index;
-  int edge[200];
+  int *edge = new int[txdim];
   int edge_counter;
   // int counter = 0;
   int i;

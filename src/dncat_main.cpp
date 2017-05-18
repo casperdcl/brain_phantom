@@ -372,8 +372,9 @@ exit(1);
      num = 0;
      slice_tmodel.num_tris = num;
      for(i = 0; i < tmodel[k].num_tris; i++)
+	 {
        if(Test_extents_tri_z(tmodel[k].tris[i], j))
-         {
+       {
          slice_tmodel.tris[num].vertex[0].x = tmodel[k].tris[i].vertex[0].x;
          slice_tmodel.tris[num].vertex[0].y = tmodel[k].tris[i].vertex[0].y;
          slice_tmodel.tris[num].vertex[0].z = tmodel[k].tris[i].vertex[0].z;
@@ -388,13 +389,14 @@ exit(1);
 
          num++;
          slice_tmodel.num_tris = num;
-         }
-       if(slice_tmodel.num_tris > 0)
-         {
-         for(i = 0; i < slice_tmodel.num_tris; i++)
-           Render_triangle(slice_tmodel.tris[i], intensity, slice, j);
-           Fill_tri(slice_tmodel, intensity, slice, j);
-         }
+       }
+	 }
+     if(slice_tmodel.num_tris > 0)
+     {
+       for(i = 0; i < slice_tmodel.num_tris; i++)
+         Render_triangle(slice_tmodel.tris[i], intensity, slice, j);
+       Fill_tri(slice_tmodel, intensity, slice, j);
+     }
 
      //Render Skull second
      k = 28;
@@ -402,8 +404,9 @@ exit(1);
      num = 0;
      slice_tmodel.num_tris = num;
      for(i = 0; i < tmodel[k].num_tris; i++)
+	 {
        if(Test_extents_tri_z(tmodel[k].tris[i], j))
-         {
+       {
          slice_tmodel.tris[num].vertex[0].x = tmodel[k].tris[i].vertex[0].x;
          slice_tmodel.tris[num].vertex[0].y = tmodel[k].tris[i].vertex[0].y;
          slice_tmodel.tris[num].vertex[0].z = tmodel[k].tris[i].vertex[0].z;
@@ -418,13 +421,14 @@ exit(1);
 
          num++;
          slice_tmodel.num_tris = num;
-         }
-       if(slice_tmodel.num_tris > 0)
-         {
-         for(i = 0; i < slice_tmodel.num_tris; i++)
-           Render_triangle(slice_tmodel.tris[i], intensity, slice, j);
-           Fill_tri(slice_tmodel, intensity, slice, j);
-         }
+       }
+	 }
+     if(slice_tmodel.num_tris > 0)
+     {
+       for(i = 0; i < slice_tmodel.num_tris; i++)
+         Render_triangle(slice_tmodel.tris[i], intensity, slice, j);
+       Fill_tri(slice_tmodel, intensity, slice, j);
+     }
 
      //Render Spinal fluid third
      k = 255;
@@ -432,8 +436,9 @@ exit(1);
      num = 0;
      slice_tmodel.num_tris = num;
      for(i = 0; i < tmodel[k].num_tris; i++)
+	 {
        if(Test_extents_tri_z(tmodel[k].tris[i], j))
-         {
+       {
          slice_tmodel.tris[num].vertex[0].x = tmodel[k].tris[i].vertex[0].x;
          slice_tmodel.tris[num].vertex[0].y = tmodel[k].tris[i].vertex[0].y;
          slice_tmodel.tris[num].vertex[0].z = tmodel[k].tris[i].vertex[0].z;
@@ -448,24 +453,26 @@ exit(1);
 
          num++;
          slice_tmodel.num_tris = num;
-         }
-       if(slice_tmodel.num_tris > 0)
-         {
-         for(i = 0; i < slice_tmodel.num_tris; i++)
-           Render_triangle(slice_tmodel.tris[i], intensity, slice, j);
-         Fill_tri(slice_tmodel, intensity, slice, j);
-         }
+       }
+	 }
+	 if(slice_tmodel.num_tris > 0)
+     {
+       for(i = 0; i < slice_tmodel.num_tris; i++)
+         Render_triangle(slice_tmodel.tris[i], intensity, slice, j);
+       Fill_tri(slice_tmodel, intensity, slice, j);
+     }
 
      for(k = 0; k <= END_MODELS; k++)
-       {
+     {
        if(k != 21 && k != 28 && k != 255)
-         {
+       {
          intensity = k;
          num = 0;
          slice_tmodel.num_tris = num;       
          for(i = 0; i < tmodel[k].num_tris; i++)
+         {
            if(Test_extents_tri_z(tmodel[k].tris[i], j))
-             {
+           {
              slice_tmodel.tris[num].vertex[0].x = tmodel[k].tris[i].vertex[0].x;
              slice_tmodel.tris[num].vertex[0].y = tmodel[k].tris[i].vertex[0].y;
              slice_tmodel.tris[num].vertex[0].z = tmodel[k].tris[i].vertex[0].z;
@@ -480,56 +487,57 @@ exit(1);
 
              num++;
              slice_tmodel.num_tris = num;
-             }
+           }
+         }
          if(slice_tmodel.num_tris > 0)
-           {
+         {
            for(i = 0; i < slice_tmodel.num_tris; i++)
              Render_triangle(slice_tmodel.tris[i], intensity, slice, j);
            Fill_tri(slice_tmodel, intensity, slice, j);
-           }
          }
        }
+     }
 
      for(k = xoffset; k < txdim; k++)
-        for(l = yoffset; l < tydim; l++)
-          {
-          index1 = (int)( (k-xoffset) / subvoxel_index) + 
-                   (int)( (l-yoffset) / subvoxel_index) * XDIM + (int)(j/subvoxel_index) * XDIM * YDIM;
-          index2 = k + l * txdim;
-         
-          if(slice[index2] != -1)
-            {
-            ID = slice[index2];
-            activ = activity[ID];
-            fphan_id[index1] += slice[index2] / (subvoxel_index*subvoxel_index*subvoxel_index);
-            fphan[index1] += activ / (subvoxel_index*subvoxel_index*subvoxel_index);
-            fphan_avg[index1] += activ / (subvoxel_index*subvoxel_index*subvoxel_index*out_frames);
-            }
-          }
-   } /*End slice loop*/
-   printf("\rSlice = %d/%d (100%%) \n", tzdim, tzdim);
- 
+       for(l = yoffset; l < tydim; l++)
+       {
+         index1 = (int)( (k-xoffset) / subvoxel_index) + 
+                  (int)( (l-yoffset) / subvoxel_index) * XDIM + (int)(j/subvoxel_index) * XDIM * YDIM;
+         index2 = k + l * txdim;
+        
+         if(slice[index2] != -1)
+         {
+           ID = slice[index2];
+           activ = activity[ID];
+           fphan_id[index1] += slice[index2] / (subvoxel_index*subvoxel_index*subvoxel_index);
+           fphan[index1] += activ / (subvoxel_index*subvoxel_index*subvoxel_index);
+           fphan_avg[index1] += activ / (subvoxel_index*subvoxel_index*subvoxel_index*out_frames);
+         }
+       }
+    } /*End slice loop*/
+    printf("\rSlice = %d/%d (100%%) \n", tzdim, tzdim);
+
 //  GetVolumes(fphan_id); 
-  if (act_phan_each == 1) 
+    if (act_phan_each == 1) 
     { /* SAVE ACTIVITY PHANTOM for frame kf to file */
-    /* write activity phantom for frame kf */
-    sprintf(outfile,"%s_%d",outputbase,kf);
-    fprintf(fp, "\nSaving activity phantom in file : %s", outfile);
-    SAVE_TO_FILE(fphan,XDIM,YDIM,ZDIM_OUTPUT,outfile);
+      /* write activity phantom for frame kf */
+      sprintf(outfile,"%s_%d",outputbase,kf);
+      fprintf(fp, "\nSaving activity phantom in file : %s", outfile);
+      SAVE_TO_FILE(fphan,XDIM,YDIM,ZDIM_OUTPUT,outfile);
     }
   } /* End kf loop*/
-   
+
 /*
     --------------------------
     | END of MAIN VOXEL LOOP |
     --------------------------
 */
   if (act_phan_ave == 1) 
-    {/* SAVE AVERAGE ACTIVITY PHANTOM to file */
+  {/* SAVE AVERAGE ACTIVITY PHANTOM to file */
     sprintf(outfile,"%s_%s",outputbase,"av");
     fprintf(fp, "\nSaving time-avg activity phantom in file : %s", outfile);
     fprintf(fp, "\n-------------------------------------------------");
     SAVE_TO_FILE(fphan_avg,XDIM,YDIM,ZDIM_OUTPUT,outfile);    
-    }
+  }
   fclose(fp);
 } /*	End Main	*/

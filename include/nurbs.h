@@ -26,18 +26,16 @@ struct point
   #if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
     if(0 > i || i > 2)
       throw std::length_error("Index out of bounds");
-  #else
-    return reinterpret_cast<F *>(this)[i];
   #endif
+    return reinterpret_cast<F *>(this)[i];
   }
 
   const F &operator[](int i) const {
   #if !defined(NDEBUG) && (defined(_DEBUG) || defined(DEBUG))
     if(0 > i || i > 2)
       throw std::length_error("Index out of bounds");
-  #else
-    return reinterpret_cast<const F *>(this)[i];
   #endif
+    return reinterpret_cast<const F *>(this)[i];
   }
 
   template<typename FloatArrayType>
