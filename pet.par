@@ -1,0 +1,124 @@
+1	: activity_phantom_each_frame (1=save phantom to file, 0=don't save)
+0	: activity_phantom_average    (1=save , 0=don't save) see NOTE 0
+
+0       : motion_option  (0 = no motion, 1 = motion)
+
+1	: output_period (SECS) 
+1	: output_frames (# of output time frames )
+
+1	: motion_period (SECS) (length of motion cycle)
+0.0	: motion_start_phase_index (range=0.0 to 1.0)
+0	: motion_flag (0 = use default curve with amplitudes below, 1 = use user defined curve ignoring following 6 parameters below)
+0.0	: x_translation  (extent in mm's)
+0.0	: y_translation  (extent in mm's)
+0.0	: z_translation  (extent in mm's)
+0.0	: x_rotation  (extent in degrees)
+0.0	: y_rotation  (extent in degrees)
+0.0	: z_rotation  (extent in degrees)
+sample_motion.txt	: filename for user defined motion curve
+
+0.08    : pixel width (cm);   
+0.10	: slice width (cm);   
+256	: array size   
+1	: start_slice; 
+256	: end_slice;  
+1	: subvoxel_index (=1,2,3,4 -> 1,8,27,64 subvoxels/voxel, respectively)
+
+87 Grey "superior frontal gyrus" right
+87 "superior frontal gyrus" left
+87 "middle frontal gyrus" right
+87 "middle frontal gyrus" left
+93 "inferior frontal gyrus" right
+93 "inferior frontal gyrus" left
+97 "precentral gyrus" right
+97 "precentral gyrus" left
+90 "lateral front-orbital gyrus" right 
+90 "lateral front-orbital gyrus" left
+90 "medial front-orbital gyrus" right
+90 "medial front-orbital gyrus" left
+100 "cingulate region" right
+100 "cingulate region" left
+82 "medial frontal gyrus" right  
+82 "medial frontal gyrus" left   
+110 "superior parietal lobule" right
+100 "superior parietal lobule" left
+100 "supramarginal gyrus" right
+100 "supramarginal gyrus" left
+93 "angular gyrus" right  
+93 "angular gyrus" left
+110 "precuneus" right
+110 "precuneus" left
+87 "postcentral gyrus" right
+87 "postcentral gyrus" left
+90 "superior temporal gyrus" right 
+90 "superior temporal gyrus" left  
+87 "middle temporal gyrus" right
+87 "middle temporal gyrus" left
+105 "inferior temporal gyrus" right
+105 "inferior temporal gyrus" left
+75 "uncus" right
+75 "uncus" left
+100 "medial occipitotemporal gyrus" right
+100 "medial occipitotemporal gyrus" left
+100 "lateral occipitotemporal gyrus" right
+100 "lateral occipitotemporal gyrus" left
+80 "amygdala" right
+80 "amygdala" left
+110 "parahippocampal gyrus" right
+110 "parahippocampal gyrus" left
+100 "occipital pole" right
+100 "occipital pole" left
+110 "superior occipital gyrus" right
+110 "superior occipital gyrus" left
+110 "middle occipital gyrus" right
+110 "middle occipital gyrus" left
+110 "inferior occipital gyrus" right
+110 "inferior occipital gyrus" left
+118 "cuneus" right
+118 "cuneus" left
+115 "lingual gyrus" right
+115 "lingual gyrus" left
+100 "insula" right
+100 "insula" left
+100 Caudate "caudate nucleus" right
+100 "caudate nucleus" left
+105 Putamen "putamen" right
+105 "putamen" left
+60 "globus palladus" right
+60 "globus palladus" left
+100 "thalamus" right
+100 "thalamus" left
+35 White "corpus callosum"
+35 "subarachnoid cerebro-spinal fluid"
+35 "third ventricle"
+35 "fourth ventricle"
+35 "lateral ventricle" right
+35 "lateral ventricle" left
+144 BrainStem "brain stem"
+45 "white matter"
+45 "frontal lobe WM" right
+45 "frontal lobe WM" left
+45 "occipital lobe WM" right
+45 "occipital lobe WM" left
+45 "parietal lobe WM" right
+45 "parietal lobe WM" left
+45 "temporal lobe WM" right
+45 "temporal lobe WM" left
+0 "background"
+55 "scalp"
+0 "skull"
+0 "dura and sinuses"
+62 "hippocampal formation" right
+62 "hippocampal formation" left
+60 "nucleus accumbens" right
+60 "nucleus accumbens" left
+82 "fornix" right
+82 "fornix" left
+110 "posterior limb of internal capsule inc. cerebral peduncle" right
+110 "posterior limb of internal capsule inc. cerebral peduncle" left
+45 "subthalamic nucleus" right
+45 "subthalamic nucleus" left
+45 "anterior limb of internal capsule" right
+45 "anterior limb of internal capsule" left
+95 Cerebellum "cerebellum" right
+95 "cerebellum" left
