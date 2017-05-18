@@ -14,7 +14,7 @@ if(MSVC)
   set(CMAKE_CXX_FLAGS_RELEASE
     "${CMAKE_CXX_FLAGS_RELEASE} /Ox /Oi /Ot /GT /GL /MP")
 else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O6 -g -Wall -std=c++11")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")  # -Wall
   set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -lm")
 endif()
 

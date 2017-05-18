@@ -2348,7 +2348,7 @@ void Intersect_tri(TRIANGLE T, int organ_id, XP_ARRAY *int_points)
 
   // Plane_eqn(v1, v2, v3, &A, &B, &C, &D);
   Plane_eqn(T.vertex[0], T.vertex[1], T.vertex[2], &A, &B, &C, &D);
-  if (abs(A) > std::numeric_limits<double>::min())
+  if (A != 0.0)  // abs(A) > std::numeric_limits<double>::min()
 	xint = -D / A;
   // else xint = std::numeric_limits<double>::max() * (signbit(D) == signbit(A) ? -1 : 1);
 
