@@ -25,7 +25,7 @@ install(TARGETS dncat_bin RUNTIME DESTINATION .)
 macro(processPar PARBASE)
   add_custom_command(OUTPUT "${CMAKE_SOURCE_DIR}/${PARBASE}_1.bin"
     COMMAND dncat_bin ${PARBASE}.par ${PARBASE}
-    MAIN_DEPENDENCY dncat_bin
+    MAIN_DEPENDENCY "dncat_bin${CMAKE_EXECUTABLE_SUFFIX}"
     DEPENDS "${CMAKE_SOURCE_DIR}/${PARBASE}.par"
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     COMMENT "Running ${PARBASE}"
