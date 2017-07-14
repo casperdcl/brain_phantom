@@ -1,0 +1,3 @@
+matplotlib
+docopt
+argopt>=0.3.2
