@@ -42,3 +42,4 @@ endmacro()
 
 processPar(test)
 processPar(pet)
+processPar(fdg)

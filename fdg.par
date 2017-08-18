@@ -1,0 +1,124 @@
+1	: activity_phantom_each_frame (1=save phantom to file, 0=don't save)
+0	: activity_phantom_average    (1=save , 0=don't save) see NOTE 0
+
+0       : motion_option  (0 = no motion, 1 = motion)
+
+1	: output_period (SECS) 
+1	: output_frames (# of output time frames )
+
+1	: motion_period (SECS) (length of motion cycle)
+0.0	: motion_start_phase_index (range=0.0 to 1.0)
+0	: motion_flag (0 = use default curve with amplitudes below, 1 = use user defined curve ignoring following 6 parameters below)
+0.0	: x_translation  (extent in mm's)
+0.0	: y_translation  (extent in mm's)
+0.0	: z_translation  (extent in mm's)
+0.0	: x_rotation  (extent in degrees)
+0.0	: y_rotation  (extent in degrees)
+0.0	: z_rotation  (extent in degrees)
+sample_motion.txt	: filename for user defined motion curve
+
+0.104  : pixel width (cm);   
+0.102	: slice width (cm); (NOTE THAT THIS IS 1/0.85 times larger than real life)  
+256	: array size   
+1	: start_slice; 
+190	: end_slice;  
+1	: subvoxel_index (=1,2,3,4 -> 1,8,27,64 subvoxels/voxel, respectively)
+
+170 Grey "superior frontal gyrus" right
+170 "superior frontal gyrus" left
+170 "middle frontal gyrus" right
+170 "middle frontal gyrus" left
+190 "inferior frontal gyrus" right
+190 "inferior frontal gyrus" left
+170 "precentral gyrus" right
+170 "precentral gyrus" left
+170 "lateral front-orbital gyrus" right 
+170 "lateral front-orbital gyrus" left
+170 "medial front-orbital gyrus" right
+170 "medial front-orbital gyrus" left
+167 "cingulate region" right
+167 "cingulate region" left
+160 "medial frontal gyrus" right  
+160 "medial frontal gyrus" left   
+150 "superior parietal lobule" right
+150 "superior parietal lobule" left
+150 "supramarginal gyrus" right
+150 "supramarginal gyrus" left
+150 "angular gyrus" right  
+150 "angular gyrus" left
+220 "precuneus" right
+220 "precuneus" left
+153 "postcentral gyrus" right
+153 "postcentral gyrus" left
+160 "superior temporal gyrus" right 
+160 "superior temporal gyrus" left  
+124 "middle temporal gyrus" right
+124 "middle temporal gyrus" left
+152 "inferior temporal gyrus" right
+152 "inferior temporal gyrus" left
+75 "uncus" right
+75 "uncus" left
+170 "medial occipitotemporal gyrus" right
+170 "medial occipitotemporal gyrus" left
+170 "lateral occipitotemporal gyrus" right
+170 "lateral occipitotemporal gyrus" left
+80 "amygdala" right
+80 "amygdala" left
+220 "parahippocampal gyrus" right
+220 "parahippocampal gyrus" left
+150 "occipital pole" right
+150 "occipital pole" left
+200 "superior occipital gyrus" right
+200 "superior occipital gyrus" left
+200 "middle occipital gyrus" right
+200 "middle occipital gyrus" left
+200 "inferior occipital gyrus" right
+200 "inferior occipital gyrus" left
+224 "cuneus" right
+224 "cuneus" left
+150 "lingual gyrus" right
+150 "lingual gyrus" left
+150 "insula" right
+150 "insula" left
+166 Caudate "caudate nucleus" right
+166 "caudate nucleus" left
+190 Putamen "putamen" right
+190 "putamen" left
+75 "globus palladus" right
+75 "globus palladus" left
+145 "thalamus" right
+145 "thalamus" left
+55 White "corpus callosum"
+35 "subarachnoid cerebro-spinal fluid"
+35 "third ventricle"
+35 "fourth ventricle"
+35 "lateral ventricle" right
+35 "lateral ventricle" left
+95 BrainStem "brain stem"
+50 "white matter"
+50 "frontal lobe WM" right
+50 "frontal lobe WM" left
+50 "occipital lobe WM" right
+50 "occipital lobe WM" left
+50 "parietal lobe WM" right
+50 "parietal lobe WM" left
+50 "temporal lobe WM" right
+50 "temporal lobe WM" left
+0 "background"
+15 "scalp"
+0 "skull"
+0 "dura and sinuses"
+70 "hippocampal formation" right
+70 "hippocampal formation" left
+75 "nucleus accumbens" right
+75 "nucleus accumbens" left
+85 "fornix" right
+85 "fornix" left
+120 "posterior limb of internal capsule inc. cerebral peduncle" right
+120 "posterior limb of internal capsule inc. cerebral peduncle" left
+50 "subthalamic nucleus" right
+50 "subthalamic nucleus" left
+50 "anterior limb of internal capsule" right
+50 "anterior limb of internal capsule" left
+95 Cerebellum "cerebellum" right
+95 "cerebellum" left

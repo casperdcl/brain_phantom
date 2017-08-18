@@ -21,7 +21,7 @@ sample_motion.txt	: filename for user defined motion curve
 0.10	: slice width (cm);   
 256	: array size   
 1	: start_slice; 
-256	: end_slice;  
+190	: end_slice;  
 1	: subvoxel_index (=1,2,3,4 -> 1,8,27,64 subvoxels/voxel, respectively)
 
 87 Grey "superior frontal gyrus" right
