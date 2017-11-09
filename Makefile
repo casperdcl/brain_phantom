@@ -10,7 +10,7 @@ OBJS=$(SRCS:src/%.cpp=%.o)
 
 run: dncat_bin test.par
 	./$^ test
-	python -BO showslice.py test_1.bin
+	caspyr showslice test_1.bin
 
 all: dncat_bin
 # dncat_im

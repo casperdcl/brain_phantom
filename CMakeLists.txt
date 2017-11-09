@@ -32,7 +32,7 @@ macro(processPar PARBASE)
     VERBATIM
   )
   add_custom_target(show${PARBASE}
-    COMMAND python -BO showslice.py ${PARBASE}_1.bin
+    COMMAND caspyr showslice ${PARBASE}_1.bin
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     DEPENDS "${CMAKE_SOURCE_DIR}/${PARBASE}_1.bin"
     COMMENT "Showing ${PARBASE}"
