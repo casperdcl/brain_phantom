@@ -8,3 +8,5 @@ brain_phantom/
 *.png
 dncat_bin
 build/
+*.bin
+*_log
